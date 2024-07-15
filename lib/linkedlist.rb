@@ -28,6 +28,18 @@ class LinkedList
       @head = new_node
     end
   end
+  def size
+    return 0 if @head.nil?
+    count = 0
+    current = @head
+    while current
+      count += 1
+      current = current.next_node
+    end
+    count
+  end
+
+
   class Node
     attr_accessor :value, :next_node
     def initialize(value)
@@ -48,3 +60,4 @@ while current
   puts current.value
   current = current.next_node
 end
+puts list.size
