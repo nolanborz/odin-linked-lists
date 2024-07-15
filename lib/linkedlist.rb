@@ -41,6 +41,7 @@ list.append_to_end(1)
 list.append_to_end(2)
 list.append_to_end(3)
 list.prepend_to_front(10)
+list.prepend_to_front(24)
 
 current = list.head
 while current
