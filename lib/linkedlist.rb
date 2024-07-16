@@ -38,6 +38,13 @@ class LinkedList
     end
     count
   end
+  def head
+    @head
+  end
+  def tail
+    @tail
+  end
+ 
 
 
   class Node
@@ -60,4 +67,4 @@ while current
   puts current.value
   current = current.next_node
 end
-puts list.size
+puts list.tail.value
