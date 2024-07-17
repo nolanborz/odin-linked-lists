@@ -4,6 +4,7 @@ class LinkedList
   def initialize
     @head = nil
     @tail = nil
+    @size = 0
   end
 
   def append_to_end(value)
@@ -16,6 +17,7 @@ class LinkedList
       @tail.next_node = new_node
       @tail = new_node
     end
+    @size += 1
   end
 
   def prepend_to_front(value)
@@ -27,28 +29,25 @@ class LinkedList
       new_node.next_node = @head
       @head = new_node
     end
+    @size += 1
   end
+
   def size
-    return 0 if @head.nil?
-    count = 0
-    current = @head
-    while current
-      count += 1
-      current = current.next_node
-    end
-    count
+    @size
   end
+
   def head
     @head
   end
+
   def tail
     @tail
   end
   def at(index)
-    count = 0
+    return nil if index < 0
     current = @head
-    until count >= index
-      count +=1
+    index.times do
+      return nil if current.nil?
       current = current.next_node
     end
     current
@@ -68,7 +67,7 @@ class LinkedList
     value = @tail.value
     @tail = current
     @tail.next_node = nil
-
+    @size -= 1
     value
   end
   def contains?(value)
@@ -109,6 +108,35 @@ class LinkedList
     str += "nil"
     str
   end
+  def insert_at(value, index)
+    if index <= 0
+      prepend_to_front(value)
+    elsif index >= @size
+      append_to_end(value)
+    else
+      new_node = Node.new(value)
+      previous_node = at(index - 1)
+      new_node.next_node = previous_node.next_node
+      previous_node.next_node = new_node
+    end
+    @size += 1
+  end
+  def remove_at(index)
+    return nil if index < 0 || index >= @size
+    if index == 0
+      removed_node = @head.value
+      @head = @head.next_node
+      @tail = nil if @head.nil?
+    else
+      previous_node = at(index - 1)
+      removed_node = previous_node.next_node
+      removed_value = removed_node.value
+      previous_node.next_node = removed_node.next_node
+      @tail = previous_node if index == @size - 1
+    end
+    @size -= 1
+    removed_value
+  end
 
   
   class Node
@@ -120,21 +148,15 @@ class LinkedList
   end
 end
 list = LinkedList.new
-list.append_to_end(1)
-list.append_to_end(2)
-list.append_to_end(3)
-list.prepend_to_front(10)
-list.prepend_to_front(24)
+list.append_to_end('shien')
+list.append_to_end('kizan')
+list.append_to_end('kaigeki')
+list.remove_at(0)
 
 current = list.head
 while current
   puts current.value
   current = current.next_node
 end
-puts list.pop()
-current = list.head
-while current
-  puts current.value
-  current = current.next_node
-end
+
 puts list.to_s
